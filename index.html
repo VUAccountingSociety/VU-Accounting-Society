@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VU Accounting Society</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;background:#f8f8f6}
+  :root{--navy:#0a1f44;--gold:#c9a84c;--gold-light:#f0d080;--navy-light:#1a3a6e}
+  .site-wrap{max-width:880px;margin:0 auto;padding:0 0 3rem}
+
+  /* NAV */
+  nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+  .nav-brand{color:var(--gold);font-size:15px;font-weight:600;letter-spacing:.02em;text-decoration:none}
+  .nav-links{display:flex;gap:1.25rem;flex-wrap:wrap}
+  .nav-links a{color:rgba(255,255,255,.75);font-size:13px;text-decoration:none;transition:color .15s}
+  .nav-links a:hover{color:var(--gold-light)}
+
+  /* HERO */
+  .hero{background:var(--navy);padding:3.5rem 2rem 3rem;text-align:center;margin-bottom:2.5rem}
+  .hero-badge{display:inline-block;background:var(--gold);color:var(--navy);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;margin-bottom:1rem;text-transform:uppercase}
+  .hero h1{color:#fff;font-size:30px;font-weight:600;line-height:1.25;margin-bottom:.75rem}
+  .hero p{color:rgba(255,255,255,.7);font-size:15px;max-width:480px;margin:0 auto 1.75rem;line-height:1.65}
+  .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn-primary{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+  .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);padding:10px 22px;border-radius:8px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+  .btn-primary:hover{background:var(--gold-light)}
+  .btn-outline:hover{border-color:rgba(255,255,255,.6)}
+  .btn-navy{background:var(--navy);color:var(--gold);border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+  .btn-navy:hover{background:var(--navy-light)}
+
+  section{padding:0 2rem;margin-bottom:2.75rem}
+  .section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:.4rem}
+  .section-title{font-size:22px;font-weight:600;margin-bottom:.75rem;color:#0a1f44}
+  .divider{width:40px;height:2px;background:var(--gold);margin-bottom:1.5rem}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .about-card{background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:1.1rem 1.25rem}
+  .about-card .icon{font-size:20px;color:var(--gold);margin-bottom:.5rem}
+  .about-card h3{font-size:14px;font-weight:600;margin-bottom:.35rem;color:#0a1f44}
+  .about-card p{font-size:13px;color:#666;line-height:1.55}
+
+  /* MEMBERSHIP BANNER */
+  .membership-banner{background:var(--navy);border-radius:12px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:1.25rem}
+  .membership-banner .icon{font-size:28px;color:var(--gold);flex-shrink:0;margin-top:2px}
+  .membership-banner h3{font-size:16px;font-weight:600;color:#fff;margin-bottom:.35rem}
+  .membership-banner p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.6}
+  .membership-banner strong{color:var(--gold-light)}
+
+  /* EVENTS */
+  .events-list{display:flex;flex-direction:column;gap:10px}
+  .event-row{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:1rem 1.25rem}
+  .event-row.featured{border:2px solid var(--gold);background:#fffdf5}
+  .event-date{background:var(--navy);color:#fff;border-radius:8px;padding:6px 10px;text-align:center;min-width:52px;flex-shrink:0}
+  .event-date .month{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-light)}
+  .event-date .day{font-size:18px;font-weight:600;line-height:1}
+  .event-info h3{font-size:14px;font-weight:600;margin-bottom:2px;color:#0a1f44}
+  .event-info p{font-size:12px;color:#888;line-height:1.5}
+  .event-tag{margin-left:auto;font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap;font-weight:500;flex-shrink:0}
+  .tag-mtf{background:rgba(201,168,76,.2);color:#7a5e10}
+  .tag-workshop{background:#eef5ff;color:#1a4fa8}
+  .tag-kickoff{background:#edfaf3;color:#166a3a}
+
+  /* OFFICERS */
+  .officers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:16px}
+  .officer-card{border-radius:12px;overflow:hidden;position:relative;background:#fff;border:1px solid #e8e6de}
+  .officer-photo{width:100%;aspect-ratio:1/1;background:#e8e5dc;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .officer-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .officer-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;height:100%;background:linear-gradient(135deg,#1a3a6e 0%,#0a1f44 100%)}
+  .officer-initials{font-size:28px;font-weight:700;color:var(--gold);letter-spacing:.02em}
+  .officer-photo-label{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase}
+  .officer-overlay{position:absolute;inset:0;background:rgba(10,31,68,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;transition:opacity .2s ease}
+  .officer-card:hover .officer-overlay{opacity:1}
+  .overlay-btn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(201,168,76,.4);color:#fff;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;text-decoration:none;transition:background .15s;cursor:pointer}
+  .overlay-btn:hover{background:rgba(201,168,76,.2)}
+  .overlay-btn i{font-size:15px;color:var(--gold)}
+  .officer-info{padding:.75rem 1rem}
+  .officer-info h3{font-size:14px;font-weight:600;color:#0a1f44;margin-bottom:2px}
+  .officer-info p{font-size:12px;color:#888}
+  .officer-card.vacant .officer-placeholder{background:linear-gradient(135deg,#ddd 0%,#ccc 100%)}
+  .officer-card.vacant .officer-initials{color:#999}
+
+  /* RESOURCES */
+  .resources-intro{font-size:14px;color:#555;margin-bottom:1.25rem;line-height:1.6}
+  .year-block{margin-bottom:1.75rem}
+  .year-label{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+  .year-badge{background:var(--navy);color:var(--gold);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;letter-spacing:.04em;text-transform:uppercase}
+  .year-note{font-size:12px;color:#888;font-style:italic}
+  .program-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+  .program-card{background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:1rem 1.1rem;text-decoration:none;color:#1a1a1a;transition:border-color .15s;display:block}
+  .program-card:hover{border-color:var(--gold)}
+  .program-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+  .program-firm{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gold)}
+  .program-type{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500}
+  .program-type.internship{background:#edfaf3;color:#166a3a}
+  .program-type.slp{background:#eef5ff;color:#1a4fa8}
+  .program-name{font-size:14px;font-weight:600;color:#0a1f44;margin-bottom:.25rem}
+  .program-desc{font-size:12px;color:#666;line-height:1.5;margin-bottom:.5rem}
+  .program-meta{display:flex;gap:10px;flex-wrap:wrap}
+  .program-meta span{font-size:11px;color:#999;display:flex;align-items:center;gap:3px}
+  .resources-divider{border:none;border-top:1px solid #e8e6de;margin:1.5rem 0}
+  .general-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .resource-link{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:.85rem 1rem;text-decoration:none;color:#1a1a1a;transition:border-color .15s}
+  .resource-link:hover{border-color:var(--gold)}
+  .resource-link .ricon{font-size:18px;color:var(--gold)}
+  .resource-link span{font-size:13px;font-weight:500}
+  .resource-link .arrow{margin-left:auto;font-size:14px;color:#aaa}
+
+  /* APPLY SECTION */
+  .apply-hero{background:var(--navy);border-radius:16px;padding:2.5rem 2rem;text-align:center;margin-bottom:2rem}
+  .apply-hero h2{color:#fff;font-size:24px;font-weight:600;margin-bottom:.6rem}
+  .apply-hero p{color:rgba(255,255,255,.7);font-size:14px;max-width:440px;margin:0 auto 1.5rem;line-height:1.65}
+  .apply-hero .role-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);color:var(--gold-light);font-size:13px;font-weight:600;padding:6px 16px;border-radius:20px;margin-bottom:1.25rem}
+
+  /* Timeline */
+  .timeline-wrap{margin-bottom:2rem;overflow-x:auto;padding-bottom:.5rem}
+  .timeline{display:flex;align-items:flex-start;gap:0;min-width:520px}
+  .timeline-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
+  .timeline-step:not(:last-child)::after{content:'';position:absolute;top:16px;left:50%;width:100%;height:2px;background:#e0ddd5;z-index:0}
+  .timeline-step:not(:last-child).done::after{background:var(--gold)}
+  .tl-dot{width:32px;height:32px;border-radius:50%;background:#e0ddd5;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#999;z-index:1;position:relative;flex-shrink:0}
+  .tl-dot.active{background:var(--gold);color:var(--navy)}
+  .tl-dot.done{background:var(--navy);color:var(--gold)}
+  .tl-label{font-size:11px;font-weight:600;color:#888;text-align:center;margin-top:.4rem;line-height:1.3;max-width:72px}
+  .tl-label.active{color:var(--navy)}
+
+  /* Why Apply cards */
+  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:12px;margin-bottom:2rem}
+  .why-card{background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:1.1rem 1.25rem}
+  .why-card .icon{font-size:22px;color:var(--gold);margin-bottom:.5rem}
+  .why-card h3{font-size:14px;font-weight:600;color:#0a1f44;margin-bottom:.3rem}
+  .why-card p{font-size:13px;color:#666;line-height:1.55}
+
+  /* Steps */
+  .steps-wrap{margin-bottom:2rem}
+  .step-row{display:flex;gap:16px;align-items:flex-start;margin-bottom:1rem}
+  .step-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;margin-top:2px}
+  .step-body h3{font-size:14px;font-weight:600;color:#0a1f44;margin-bottom:.25rem}
+  .step-body p{font-size:13px;color:#666;line-height:1.55}
+  .step-connector{width:36px;display:flex;justify-content:center;flex-shrink:0}
+  .step-connector-line{width:2px;height:20px;background:#e0ddd5;margin:-6px 0}
+
+  /* Application form */
+  .apply-form-wrap{background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:1.5rem;margin-bottom:2rem}
+  .apply-form-wrap h3{font-size:16px;font-weight:600;color:#0a1f44;margin-bottom:.25rem}
+  .apply-form-wrap .form-sub{font-size:13px;color:#888;margin-bottom:1.25rem}
+  .form-group{margin-bottom:1rem}
+  .form-group label{display:block;font-size:13px;font-weight:500;margin-bottom:.4rem;color:#555}
+  .form-group input,.form-group select,.form-group textarea{width:100%;font-size:14px;padding:8px 12px;border:1px solid #ddd;border-radius:8px;outline:none;font-family:inherit;color:#1a1a1a;background:#fff}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--navy)}
+  .form-group textarea{height:100px;resize:vertical}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .submit-btn{background:var(--navy);color:var(--gold);border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+  .submit-btn:hover{background:var(--navy-light)}
+
+  /* Email alt */
+  .email-alt{background:#f8f7f2;border:1px solid #e8e6de;border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+  .email-alt i{font-size:24px;color:var(--gold);flex-shrink:0}
+  .email-alt div h3{font-size:14px;font-weight:600;color:#0a1f44;margin-bottom:.2rem}
+  .email-alt div p{font-size:13px;color:#666}
+  .email-alt div a{color:var(--navy);font-weight:600;text-decoration:none}
+  .email-alt div a:hover{text-decoration:underline}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid #e8e6de}
+  .faq-q{width:100%;background:none;border:none;text-align:left;padding:.9rem 0;font-size:14px;font-weight:600;color:#0a1f44;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .faq-q i{font-size:16px;color:#aaa;flex-shrink:0;transition:transform .2s}
+  .faq-q.open i{transform:rotate(180deg)}
+  .faq-a{font-size:13px;color:#555;line-height:1.65;padding-bottom:1rem;display:none}
+  .faq-a.open{display:block}
+
+  /* JOIN/CONTACT */
+  .contact-card{background:#fff;border:1px solid #e8e6de;border-radius:12px;padding:1.5rem;max-width:520px}
+
+  footer{background:var(--navy);padding:1.5rem 2rem;margin:0 2rem;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .footer-brand{color:var(--gold);font-size:14px;font-weight:600}
+  .footer-links{display:flex;gap:1rem}
+  .footer-links a{color:rgba(255,255,255,.45);font-size:12px;text-decoration:none}
+  .footer-links a:hover{color:var(--gold-light)}
+  .footer-text{color:rgba(255,255,255,.35);font-size:11px;width:100%}
+
+  @media(max-width:600px){
+    nav{padding:0 1rem}
+    .nav-links{gap:.75rem}
+    .nav-links a{font-size:11px}
+    .hero{padding:2.5rem 1rem 2rem}
+    section{padding:0 1rem}
+    .form-row{grid-template-columns:1fr}
+    footer{margin:0 1rem}
+    .membership-banner{flex-direction:column;gap:.75rem}
+  }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <nav>
+    <a class="nav-brand" href="#">VU Accounting Society</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#officers">Officers</a>
+      <a href="#resources">Resources</a>
+      <a href="#apply">Apply</a>
+      <a href="#join">Join</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Vanguard University · Costa Mesa, CA</div>
+    <h1>Grow. Connect.<br>Lead in Accounting.</h1>
+    <p>The VU Accounting Society prepares students for careers in public accounting through networking, professional development, and community.</p>
+    <div class="hero-btns">
+      <a href="#join" class="btn-primary">Join the Society</a>
+      <a href="#events" class="btn-outline">View Events</a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About us</div>
+    <div class="section-title">Who we are</div>
+    <div class="divider"></div>
+
+    <div class="membership-banner">
+      <i class="ti ti-users icon"></i>
+      <div>
+        <h3>Membership is open to everyone</h3>
+        <p><strong>All accounting majors are automatically members</strong> of the VU Accounting Society — no sign-up required. We also welcome any business major interested in learning about public accounting, networking with firms, and building their career. Come to any event and get involved!</p>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="icon"><i class="ti ti-users"></i></div>
+        <h3>Community</h3>
+        <p>A tight-knit group of accounting students supporting each other through coursework and recruiting.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon"><i class="ti ti-briefcase"></i></div>
+        <h3>Career readiness</h3>
+        <p>Resume workshops, LinkedIn reviews, and networking events to prep for Big 4 and local firm recruiting.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon"><i class="ti ti-building-skyscraper"></i></div>
+        <h3>Firm connections</h3>
+        <p>Meet professionals from regional and national CPA firms through panels, site visits, and sponsored events.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon"><i class="ti ti-certificate"></i></div>
+        <h3>CPA pipeline</h3>
+        <p>Resources and guidance for students pursuing CPA licensure and public accounting internships.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events">
+    <div class="section-label">Events</div>
+    <div class="section-title">Fall 2026 calendar</div>
+    <div class="divider"></div>
+    <div class="events-list">
+      <div class="event-row">
+        <div class="event-date"><div class="month">Aug</div><div class="day">TBD</div></div>
+        <div class="event-info">
+          <h3>Fall Kickoff &amp; General Meeting</h3>
+          <p>VU Campus · Details TBD · Meet your officers and learn what's ahead for fall</p>
+        </div>
+        <span class="event-tag tag-kickoff">Kickoff</span>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="month">Sep</div><div class="day">TBD</div></div>
+        <div class="event-info">
+          <h3>Pre-Meet the Firms Prep Session</h3>
+          <p>VU Campus · Details TBD · Resume review, elevator pitch practice, and firm research tips</p>
+        </div>
+        <span class="event-tag tag-workshop">Workshop</span>
+      </div>
+      <div class="event-row featured">
+        <div class="event-date"><div class="month">Sep</div><div class="day">14</div></div>
+        <div class="event-info">
+          <h3>Meet the Firms 2026 ⭐</h3>
+          <p>Biola University · Talbot East Plaza Hall, Andrews Banquet Room · 6:00 – 9:00 PM PDT</p>
+        </div>
+        <span class="event-tag tag-mtf">Meet the Firms</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICERS -->
+  <section id="officers">
+    <div class="section-label">Leadership</div>
+    <div class="section-title">Meet the team</div>
+    <div class="divider"></div>
+    <div class="officers-grid">
+
+      <!-- Rosalie -->
+      <div class="officer-card">
+        <div class="officer-photo">
+          <div class="officer-placeholder">
+            <span class="officer-initials">RG</span>
+            <span class="officer-photo-label">Photo coming soon</span>
+          </div>
+          <div class="officer-overlay">
+            <a class="overlay-btn" href="https://www.linkedin.com/in/rosaliegranados22" target="_blank"><i class="ti ti-brand-linkedin"></i> LinkedIn</a>
+            <a class="overlay-btn" href="mailto:rosalie.granados@vanguard.edu"><i class="ti ti-mail"></i> Email</a>
+          </div>
+        </div>
+        <div class="officer-info">
+          <h3>Rosalie Granados</h3>
+          <p>President</p>
+        </div>
+      </div>
+
+      <!-- Nathaniel -->
+      <div class="officer-card">
+        <div class="officer-photo">
+          <div class="officer-placeholder">
+            <span class="officer-initials">NS</span>
+            <span class="officer-photo-label">Photo coming soon</span>
+          </div>
+          <div class="officer-overlay">
+            <a class="overlay-btn" href="https://www.linkedin.com/in/nathaniellawrence/" target="_blank"><i class="ti ti-brand-linkedin"></i> LinkedIn</a>
+            <a class="overlay-btn" href="mailto:nathaniel.stahmer@vanguard.edu"><i class="ti ti-mail"></i> Email</a>
+          </div>
+        </div>
+        <div class="officer-info">
+          <h3>Nathaniel Stahmer</h3>
+          <p>Vice President</p>
+        </div>
+      </div>
+
+      <!-- Carly -->
+      <div class="officer-card">
+        <div class="officer-photo">
+          <div class="officer-placeholder">
+            <span class="officer-initials">CE</span>
+            <span class="officer-photo-label">Photo coming soon</span>
+          </div>
+          <div class="officer-overlay">
+            <a class="overlay-btn" href="https://www.linkedin.com/in/carly-estes/" target="_blank"><i class="ti ti-brand-linkedin"></i> LinkedIn</a>
+            <a class="overlay-btn" href="mailto:carly.estes@vanguard.edu"><i class="ti ti-mail"></i> Email</a>
+          </div>
+        </div>
+        <div class="officer-info">
+          <h3>Carly Estes</h3>
+          <p>Social Media Relations</p>
+        </div>
+      </div>
+
+      <!-- Isabella -->
+      <div class="officer-card">
+        <div class="officer-photo">
+          <div class="officer-placeholder">
+            <span class="officer-initials">IM</span>
+            <span class="officer-photo-label">Photo coming soon</span>
+          </div>
+          <div class="officer-overlay">
+            <a class="overlay-btn" href="https://www.linkedin.com/in/isabellamahdi/" target="_blank"><i class="ti ti-brand-linkedin"></i> LinkedIn</a>
+            <a class="overlay-btn" href="mailto:isabella.mahdi@vanguard.edu"><i class="ti ti-mail"></i> Email</a>
+          </div>
+        </div>
+        <div class="officer-info">
+          <h3>Isabella Mahdi</h3>
+          <p>Communication Relations</p>
+        </div>
+      </div>
+
+      <!-- Vacant -->
+      <div class="officer-card vacant">
+        <div class="officer-photo">
+          <div class="officer-placeholder">
+            <i class="ti ti-user-question" style="font-size:32px;color:#bbb"></i>
+            <span class="officer-photo-label" style="color:#bbb">Position open</span>
+          </div>
+          <div class="officer-overlay">
+            <a class="overlay-btn" href="#apply"><i class="ti ti-send"></i> Apply now</a>
+          </div>
+        </div>
+        <div class="officer-info">
+          <h3 style="color:#aaa">Firm Relations</h3>
+          <p style="color:var(--gold);font-weight:600">Now accepting applications</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="resources">
+    <div class="section-label">Resources</div>
+    <div class="section-title">Scholarships &amp; programs</div>
+    <div class="divider"></div>
+    <p class="resources-intro">Public accounting firms recruit early. The sooner you get on their radar, the better your chances going into junior-year internship recruiting. Programs are organized by class year — deadlines move fast, so start in the fall semester.</p>
+
+    <div class="year-block">
+      <div class="year-label">
+        <span class="year-badge">Freshman</span>
+        <span class="year-note">Priority programs — apply fall semester of your first year</span>
+      </div>
+      <div class="program-grid">
+        <a class="program-card" href="https://www.kpmg.com/us/en/careers/campus-recruiting.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">KPMG</span><span class="program-type internship">Paid Internship</span></div>
+          <div class="program-name">Embark Scholars Program</div>
+          <div class="program-desc">8-week paid internship rotating through Audit, Tax, and Advisory. Multi-year program with a 95%+ full-time offer rate — one of the strongest freshman pipelines in public accounting.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: Dec–Jan</span><span><i class="ti ti-users" style="font-size:12px"></i> Diversity-focused</span></div>
+        </a>
+        <a class="program-card" href="https://www.kpmg.com/us/en/careers/campus-recruiting.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">KPMG</span><span class="program-type slp">Leadership Program</span></div>
+          <div class="program-name">Rise Leadership Conference</div>
+          <div class="program-desc">1–2 day experience at KPMG Lakehouse in Orlando. Networking with professionals and a potential internship interview pathway for first-gen, veteran, LGBTQ+, and students of color.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: Jan–Feb</span><span><i class="ti ti-users" style="font-size:12px"></i> First-gen, diversity</span></div>
+        </a>
+        <a class="program-card" href="https://www.ey.com/en_us/careers/students" target="_blank">
+          <div class="program-card-header"><span class="program-firm">EY</span><span class="program-type slp">Virtual Program</span></div>
+          <div class="program-name">Expedition EY</div>
+          <div class="program-desc">Virtual app-based learning experience running March–May. Educational modules and networking with EY professionals. Scholarship prizes available. Open to all first-year students.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: January</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+        <a class="program-card" href="https://www.pwc.com/us/en/careers/campus/programs-and-events/start.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">PwC</span><span class="program-type internship">Paid Internship</span></div>
+          <div class="program-name">PwC Start</div>
+          <div class="program-desc">6–8 week paid summer internship confirmed open for the 2027 cycle. One of two Big 4 programs with verified freshman eligibility. Diverse candidates especially encouraged to apply.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: Dec–Jan</span><span><i class="ti ti-users" style="font-size:12px"></i> Diversity-focused</span></div>
+        </a>
+        <a class="program-card" href="https://www.grantthornton.com/careers/students" target="_blank">
+          <div class="program-card-header"><span class="program-firm">Grant Thornton</span><span class="program-type slp">Leadership Program</span></div>
+          <div class="program-name">GT Early Insights</div>
+          <div class="program-desc">Virtual one-day program built specifically for college freshmen and sophomores. Exposure to audit, tax, and advisory. Sign-ups for the 2027 program are open now on their website.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Sign up now</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+        <a class="program-card" href="https://www.bdo.com/careers/internship" target="_blank">
+          <div class="program-card-header"><span class="program-firm">BDO</span><span class="program-type slp">Leadership Program</span></div>
+          <div class="program-name">Pathway to Success</div>
+          <div class="program-desc">Designed specifically for freshmen and sophomores. Explore career paths, connect with BDO leaders, and gain one-on-one mentorship before internship recruiting begins.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Rolling</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="year-block">
+      <div class="year-label">
+        <span class="year-badge">Sophomore</span>
+        <span class="year-note">Your most important recruiting year — firms are watching</span>
+      </div>
+      <div class="program-grid">
+        <a class="program-card" href="https://www.pwc.com/us/en/careers/campus/programs-and-events/destination-cpa.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">PwC</span><span class="program-type slp">Leadership Program</span></div>
+          <div class="program-name">Destination CPA</div>
+          <div class="program-desc">3-day immersive experience for accounting majors. Rolling deadline — one of the few programs open to all students regardless of background. Strong pipeline to junior internship offers.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Rolling deadline</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+        <a class="program-card" href="https://www.pwc.com/us/en/careers/campus/programs-and-events/career-preview.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">PwC</span><span class="program-type slp">Leadership Program</span></div>
+          <div class="program-name">Career Preview</div>
+          <div class="program-desc">3-day immersive event in Orlando — travel, lodging, and meals covered. Preferred pathway to PwC internship consideration. Open to all sophomores.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: March</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+        <a class="program-card" href="https://www2.deloitte.com/us/en/pages/careers/articles/discovery-internship.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">Deloitte</span><span class="program-type internship">Paid Internship</span></div>
+          <div class="program-name">Discovery Internship</div>
+          <div class="program-desc">Sophomore-only paid internship with mentorship, professional training at Deloitte University, and real-world project exposure. Rolling deadline around May.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: March–May</span><span><i class="ti ti-users" style="font-size:12px"></i> Diversity encouraged</span></div>
+        </a>
+        <a class="program-card" href="https://www.eidebailly.com/events/slp" target="_blank">
+          <div class="program-card-header"><span class="program-firm">Eide Bailly</span><span class="program-type slp">Leadership Program</span></div>
+          <div class="program-name">Summer Leadership Program</div>
+          <div class="program-desc">1–2 day immersive program with deep dives into assurance and tax, networking with staff and partners, and a direct look at internship opportunities. Open to all years.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: Feb–March</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+        <a class="program-card" href="https://www.kpmg.com/us/en/careers/campus-recruiting.html" target="_blank">
+          <div class="program-card-header"><span class="program-firm">KPMG</span><span class="program-type internship">Paid Internship</span></div>
+          <div class="program-name">Embark Scholars (Year 2)</div>
+          <div class="program-desc">Sophomores who completed Embark as freshmen return to intern in their chosen service line. Haven't started yet? Sophomore year is your last entry point into the program.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: Dec–Jan</span><span><i class="ti ti-users" style="font-size:12px"></i> Diversity-focused</span></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="year-block">
+      <div class="year-label">
+        <span class="year-badge" style="background:#555">Junior / Senior</span>
+        <span class="year-note">Full internship recruiting — this is what all the early prep leads to</span>
+      </div>
+      <div class="program-grid">
+        <a class="program-card" href="#events">
+          <div class="program-card-header"><span class="program-firm">Big 4 &amp; Regional Firms</span><span class="program-type internship">Internship</span></div>
+          <div class="program-name">Tax &amp; Audit Internships</div>
+          <div class="program-desc">Full internship recruiting opens August–October for the following summer. Attend Meet the Firms in September and apply directly through firm portals and Handshake.</div>
+          <div class="program-meta"><span><i class="ti ti-calendar" style="font-size:12px"></i> Apply: Aug–Oct</span><span><i class="ti ti-world" style="font-size:12px"></i> Open to all</span></div>
+        </a>
+      </div>
+    </div>
+
+    <hr class="resources-divider">
+    <div class="section-label" style="margin-bottom:.75rem">General resources</div>
+    <div class="general-links">
+      <a class="resource-link" href="#"><i class="ti ti-file-text ricon"></i><span>Resume template</span><i class="ti ti-arrow-right arrow"></i></a>
+      <a class="resource-link" href="#"><i class="ti ti-brand-linkedin ricon"></i><span>LinkedIn guide</span><i class="ti ti-arrow-right arrow"></i></a>
+      <a class="resource-link" href="https://www.aicpa-cima.com/professional-insights/topic/cpa-exam" target="_blank"><i class="ti ti-calculator ricon"></i><span>CPA exam info</span><i class="ti ti-arrow-right arrow"></i></a>
+      <a class="resource-link" href="https://www.bap.org" target="_blank"><i class="ti ti-school ricon"></i><span>Beta Alpha Psi</span><i class="ti ti-arrow-right arrow"></i></a>
+      <a class="resource-link" href="#"><i class="ti ti-calendar-event ricon"></i><span>Recruiting calendar</span><i class="ti ti-arrow-right arrow"></i></a>
+      <a class="resource-link" href="#"><i class="ti ti-mail ricon"></i><span>Email newsletter</span><i class="ti ti-arrow-right arrow"></i></a>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section id="apply">
+    <div class="section-label">Open position</div>
+    <div class="section-title">Apply: Firm Relations Officer</div>
+    <div class="divider"></div>
+
+    <div class="apply-hero">
+      <div class="role-pill"><i class="ti ti-building-skyscraper" style="font-size:15px"></i> Firm Relations Officer</div>
+      <h2>Help us connect students with firms</h2>
+      <p>The Firm Relations Officer builds and maintains relationships between the VU Accounting Society and public accounting firms — coordinating events, managing firm communications, and helping members land opportunities.</p>
+      <a href="#apply-form" class="btn-primary">Apply now</a>
+    </div>
+
+    <!-- Timeline -->
+    <div style="margin-bottom:.75rem">
+      <div class="section-label">Application timeline</div>
+    </div>
+    <div class="timeline-wrap">
+      <div class="timeline">
+        <div class="timeline-step done">
+          <div class="tl-dot done">1</div>
+          <div class="tl-label active">Applications open</div>
+        </div>
+        <div class="timeline-step">
+          <div class="tl-dot">2</div>
+          <div class="tl-label">Application deadline</div>
+        </div>
+        <div class="timeline-step">
+          <div class="tl-dot">3</div>
+          <div class="tl-label">Interview invites</div>
+        </div>
+        <div class="timeline-step">
+          <div class="tl-dot">4</div>
+          <div class="tl-label">Interviews</div>
+        </div>
+        <div class="timeline-step">
+          <div class="tl-dot">5</div>
+          <div class="tl-label">Decision announced</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#aaa;margin-bottom:2rem">Dates TBD — check back soon or follow our social media for updates.</p>
+
+    <!-- Why apply -->
+    <div class="section-label" style="margin-bottom:.75rem">Why apply?</div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="icon"><i class="ti ti-building"></i></div>
+        <h3>Direct firm access</h3>
+        <p>Build real relationships with recruiters and professionals at Big 4 and regional firms before internship season.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon"><i class="ti ti-star"></i></div>
+        <h3>Resume differentiator</h3>
+        <p>Leadership in a professional organization is one of the most valued signals for public accounting recruiting.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon"><i class="ti ti-users"></i></div>
+        <h3>Impact your peers</h3>
+        <p>Help fellow students land internships and connect with the firms that will shape their careers.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon"><i class="ti ti-chart-line"></i></div>
+        <h3>Grow as a leader</h3>
+        <p>Develop project management, communication, and relationship-building skills that translate directly to public accounting.</p>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="section-label" style="margin-bottom:.75rem">Application process</div>
+    <div class="steps-wrap">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Submit your application</h3>
+          <p>Fill out the form below or email your resume and a brief statement of interest to the society. Tell us why you're interested in firm relations and what you'd bring to the role.</p>
+        </div>
+      </div>
+      <div class="step-row" style="margin-left:18px;margin-bottom:.25rem"><div class="step-connector"><div class="step-connector-line"></div></div></div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Interview with the officer team</h3>
+          <p>Selected applicants will be invited for a brief conversation with society leadership. Expect questions about your interest in public accounting, your ideas for firm engagement, and your availability.</p>
+        </div>
+      </div>
+      <div class="step-row" style="margin-left:18px;margin-bottom:.25rem"><div class="step-connector"><div class="step-connector-line"></div></div></div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Decision &amp; onboarding</h3>
+          <p>All applicants will receive a response. The selected officer will be onboarded before the Fall Kickoff and introduced to the team and members.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="apply-form-wrap" id="apply-form">
+      <h3>Application form</h3>
+      <p class="form-sub">Takes about 5 minutes. All accounting and business majors are welcome to apply.</p>
+      <form action="https://formspree.io/f/xeaqqjwn" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" name="first_name" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" name="last_name" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="jsmith@student.vanguard.edu" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Major</label>
+            <input type="text" name="major" placeholder="Accounting">
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <select name="year">
+              <option>Freshman</option>
+              <option>Sophomore</option>
+              <option>Junior</option>
+              <option>Senior</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Why are you interested in the Firm Relations role?</label>
+          <textarea name="interest" placeholder="Share what draws you to this position and what you'd bring to it…" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>LinkedIn profile URL (optional)</label>
+          <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname">
+        </div>
+        <div class="form-group">
+          <label>Resume (optional — attach as PDF if possible)</label>
+          <input type="file" name="resume" accept=".pdf,.doc,.docx">
+        </div>
+        <button type="submit" class="submit-btn">Submit application</button>
+      </form>
+    </div>
+
+    <!-- Email alt -->
+    <div class="email-alt">
+      <i class="ti ti-mail"></i>
+      <div>
+        <h3>Prefer to apply by email?</h3>
+        <p>Send your resume and a short note about your interest to <a href="mailto:accountingsociety@vanguard.edu">accountingsociety@vanguard.edu</a> with the subject line <strong>"Firm Relations Application."</strong></p>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-label" style="margin-bottom:.75rem">Frequently asked questions</div>
+    <div id="faq">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need prior experience in firm relations or events? <i class="ti ti-chevron-down"></i></button>
+        <div class="faq-a">No prior experience is required. We're looking for someone motivated, organized, and genuinely interested in helping members connect with firms. You'll be supported by the full officer team.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What is the time commitment? <i class="ti ti-chevron-down"></i></button>
+        <div class="faq-a">Expect around 3–5 hours per week on average, with busier periods around events like Meet the Firms. Officer meetings are held regularly throughout the semester.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can business majors (non-accounting) apply? <i class="ti ti-chevron-down"></i></button>
+        <div class="faq-a">Yes! The society is open to all business majors. If you have a genuine interest in public accounting and firm recruiting, we'd love to hear from you.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">When will I hear back after applying? <i class="ti ti-chevron-down"></i></button>
+        <div class="faq-a">All applicants will receive a response. Interview invitations will go out within one to two weeks of the application deadline. We'll communicate the timeline on our social media as dates are confirmed.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Still have questions? <i class="ti ti-chevron-down"></i></button>
+        <div class="faq-a">Reach out to us at <a href="mailto:accountingsociety@vanguard.edu" style="color:var(--navy);font-weight:600">accountingsociety@vanguard.edu</a> and we'll get back to you.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN / CONTACT -->
+  <section id="join">
+    <div class="section-label">Stay connected</div>
+    <div class="section-title">Contact us</div>
+    <div class="divider"></div>
+    <div class="contact-card">
+      <form action="https://formspree.io/f/xeaqqjwn" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" name="first_name" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" name="last_name" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="jsmith@student.vanguard.edu" required>
+        </div>
+        <div class="form-group">
+          <label>Year</label>
+          <select name="year">
+            <option>Freshman</option>
+            <option>Sophomore</option>
+            <option>Junior</option>
+            <option>Senior</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message or question (optional)</label>
+          <textarea name="message" placeholder="I'm interested in learning more about…"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-brand">VU Accounting Society</span>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#apply">Apply</a>
+      <a href="#join">Contact</a>
+    </div>
+    <span class="footer-text">Vanguard University of Southern California · Costa Mesa, CA</span>
+  </footer>
+
+</div>
+
+<script>
+function toggleFaq(btn){
+  const ans=btn.nextElementSibling;
+  const isOpen=btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(b=>{b.classList.remove('open');b.nextElementSibling.classList.remove('open')});
+  if(!isOpen){btn.classList.add('open');ans.classList.add('open')}
+}
+</script>
+</body>
+</html>
